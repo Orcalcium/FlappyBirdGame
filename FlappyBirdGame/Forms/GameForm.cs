@@ -13,15 +13,28 @@ namespace FlappyBirdGame
     public partial class GameForm : Form
     {
         PauseForm transpause ;
+        GameState state = AppGlobals.gameState;
+
         public GameForm()
         {
-            InitializeComponent();
+            InitializeComponent(); 
             transpause = new PauseForm(this);
-        }
 
+        }
+        public void GameLoop()
+        {
+            // Game loop logic here
+            // This is where you would update the game state, check for collisions, etc.
+            while (!state.IsPaused())
+            {
+
+            }
+
+        }
+        
         private void btnPause_Click(object sender, EventArgs e)
         {
-            
+            state.Pause();
             transpause.Location = this.Location;
             transpause.StartPosition = this.StartPosition;
             transpause.FormClosing += delegate { this.Show(); };

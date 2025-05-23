@@ -28,28 +28,28 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnPause = new System.Windows.Forms.Button();
-            this.SuspendLayout();
+            btnPause = new Button();
+            SuspendLayout();
             // 
             // btnPause
             // 
-            this.btnPause.Location = new System.Drawing.Point(360, 188);
-            this.btnPause.Name = "btnPause";
-            this.btnPause.Size = new System.Drawing.Size(75, 23);
-            this.btnPause.TabIndex = 0;
-            this.btnPause.Text = "Pause";
-            this.btnPause.UseVisualStyleBackColor = true;
-            this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
+            btnPause.Location = new Point(12, 23);
+            btnPause.Name = "btnPause";
+            btnPause.Size = new Size(50, 50);
+            btnPause.TabIndex = 0;
+            btnPause.Text = "| |";
+            btnPause.UseVisualStyleBackColor = true;
+            btnPause.Click += btnPause_Click;
             // 
             // GameForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.btnPause);
-            this.Name = "GameForm";
-            this.Text = "GameForm";
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new SizeF(9F, 19F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(800, 475);
+            Controls.Add(btnPause);
+            Name = "GameForm";
+            Text = "GameForm";
+            ResumeLayout(false);
 
         }
 

@@ -11,7 +11,7 @@ namespace FlappyBirdGame
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FlappyBirdGame());
+            Application.Run(new MainMenu());
         }
     }
 }

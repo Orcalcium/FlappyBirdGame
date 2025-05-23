@@ -11,12 +11,15 @@ using System.Windows.Forms;
 
 namespace FlappyBirdGame
 {
+
     public partial class PauseForm : Form
     {
         private GameForm gameForm; // Reference to the main game form
+
         public PauseForm(GameForm gameForm)
         {
             this.gameForm = gameForm;
+            
             InitializeComponent();
         }
 
@@ -30,6 +33,7 @@ namespace FlappyBirdGame
 
         private void btnResume_Click(object sender, EventArgs e)
         {
+            
             gameForm.Show();
             this.Hide();
             
