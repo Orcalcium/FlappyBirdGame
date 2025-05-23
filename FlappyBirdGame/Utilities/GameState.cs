@@ -2,50 +2,39 @@
 {
     public class GameState
     {
-        private bool isInMainMenu = false;
-        private bool IsPause = false;
-        private bool isGameOver = false;
-        private bool isInGame = false;
-        private int score = 0;
-        private int highestScore = 0;
+        GameStateEnum stateEnum= GameStateEnum.MainMenu;
+        private int score;
+        private int highestScore;
+        public enum GameStateEnum
+        {
+            MainMenu,
+            InGame,
+            Pause,
+            GameOver
+        }
         public GameState()
         {
-            isInMainMenu = true;
-            IsPause = false;
-            isGameOver = false;
-            isInGame = false;
+            stateEnum = GameStateEnum.MainMenu;
             score = 0;
             highestScore = 0;
         }
         public void InMainMenu()
         {
-            isInMainMenu = true;
-            IsPause = false;
-            isGameOver = false;
-            isInGame = false;
+            stateEnum=GameStateEnum.MainMenu;
             score = 0;
         }
         public void Pause()
         {
-            isInMainMenu = false;
-            IsPause = true;
-            isGameOver = false;
-            isInGame = false;
+            stateEnum=GameStateEnum.Pause;
         }
         public void GameOver()
         {
             UpdateHighstScore();
-            isInMainMenu = false;
-            IsPause = false;
-            isGameOver = true;
-            isInGame = false;
+            stateEnum=GameStateEnum.GameOver;
         }
         public void InGame()
         {
-            isInMainMenu = false;
-            IsPause = false;
-            isGameOver = false;
-            isInGame = true;
+            stateEnum=GameStateEnum.InGame;
         }
         public void UpdateHighstScore()
         {
@@ -61,16 +50,28 @@
 
         public bool IsPaused()
         {
-            return IsPause;
+            return stateEnum==GameStateEnum.Pause;
         }
         public bool IsInGame()
         {
-            return isInMainMenu;
+            return stateEnum == GameStateEnum.InGame;
         }
         public bool IsGameOver()
         {
-            return isGameOver;
+            return stateEnum == GameStateEnum.GameOver;
         }
-        
+        public bool IsInMainMenu()
+        {
+            return stateEnum == GameStateEnum.MainMenu;
+        }
+        public int GetScore()
+        {
+            return score;
+        }
+        public int GetHighestScore()
+        {
+            return highestScore;
+        }
+
     }
 }
