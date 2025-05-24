@@ -33,7 +33,11 @@ namespace FlappyBirdGame.Objects
 
             button.Location = new Point((int)transform.position.x, (int)transform.position.y);
             button.Size = new Size((int)width, (int)height);
-            
+
+        }
+        public void Update()
+        {
+            this.button.Location = new Point((int)transform.position.x, (int)transform.position.y);
         }
     }
 }

@@ -27,6 +27,7 @@ namespace FlappyBirdGame
                 Interval = (int)AppGlobals.refreshRate // Set the timer interval to 1 second (1000 ms)
             };
             pauseTimer.Tick += (sender, e) => GameLoop(); // Attach the Tick event to the OnTimerElapsed method
+            pauseTimer.Start();
         }
 
         public void GameLoop()
@@ -35,8 +36,11 @@ namespace FlappyBirdGame
             // This is where you would update the game state, check for collisions, etc.
             if (state.IsInGame())
             {
-                pillar.transform.Translate(new Vector2(0,1f));
+                pillar.transform.Translate(new Vector2(1,0f));
             }
+
+            //update the compnents to show result
+            pillar.Update();
 
         }
 
@@ -55,9 +59,6 @@ namespace FlappyBirdGame
 
         }
 
-        private void GameForm_Load_1(object sender, EventArgs e)
-        {
 
-        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlappyBirdGame.Objects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FlappyBirdGame
 {
-    public class Transform2d
+    internal class Transform2d
     {
         public Vector2 position { get; set; }
         public Vector2 scale { get; set; }
@@ -23,9 +24,9 @@ namespace FlappyBirdGame
         }
         public void Translate(Vector2 vec)
         {
-            position .x += vec.x;
-            position .y += vec.y;
+            position.x += vec.x;
+            position.y += vec.y;
         }
-
     }
 }
+

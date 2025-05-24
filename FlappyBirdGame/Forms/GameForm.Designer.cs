@@ -53,7 +53,7 @@ namespace FlappyBirdGame
             Controls.Add(btnPause);
             Name = "GameForm";
             Text = "GameForm";
-            Load += GameForm_Load_1;
+            Load += GameForm_Load;
             ResumeLayout(false);
 
         }
