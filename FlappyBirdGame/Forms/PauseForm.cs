@@ -34,6 +34,7 @@ namespace FlappyBirdGame
 
         private void btnResume_Click(object sender, EventArgs e)
         {
+            gameForm.ResumeTimers();
             state.InGame();
             gameForm.Show();
             this.Hide();

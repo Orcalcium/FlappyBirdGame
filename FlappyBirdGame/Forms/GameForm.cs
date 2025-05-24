@@ -105,12 +105,25 @@ namespace FlappyBirdGame
 
         private void btnPause_Click(object sender, EventArgs e)
         {
+            PauseTimers();
             state.Pause();
             transpause.Location = this.Location;
             transpause.StartPosition = this.StartPosition;
             transpause.FormClosing += delegate { this.Show(); };
             transpause.Show();
             this.Hide();
+        }
+        public void PauseTimers()
+        {
+            gameLoopTimer.Stop();
+            pillarTimer.Stop();
+            pillarSpeedUpTimer.Stop();
+        }
+        public void ResumeTimers()
+        {
+            gameLoopTimer.Start();
+            pillarTimer.Start();
+            pillarSpeedUpTimer.Start();
         }
 
         private void GameForm_Load(object sender, EventArgs e)
