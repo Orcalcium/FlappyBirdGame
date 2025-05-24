@@ -15,6 +15,7 @@ namespace FlappyBirdGame
     public partial class PauseForm : Form
     {
         private GameForm gameForm; // Reference to the main game form
+        GameState state = AppGlobals.gameState; // Game state instance
 
         public PauseForm(GameForm gameForm)
         {
@@ -33,7 +34,7 @@ namespace FlappyBirdGame
 
         private void btnResume_Click(object sender, EventArgs e)
         {
-            
+            state.InGame();
             gameForm.Show();
             this.Hide();
             

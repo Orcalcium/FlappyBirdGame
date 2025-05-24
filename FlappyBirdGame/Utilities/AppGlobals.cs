@@ -1,4 +1,6 @@
-﻿namespace FlappyBirdGame
+﻿using FlappyBirdGame.Objects;
+
+namespace FlappyBirdGame
 {
     public static class AppGlobals
     {

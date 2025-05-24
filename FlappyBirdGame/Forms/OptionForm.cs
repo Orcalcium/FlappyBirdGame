@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlappyBirdGame.Objects;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,6 +17,7 @@ namespace FlappyBirdGame
     public partial class OptionForm : Form
     {
         public int AppVolume = 50; // Default volume level
+        GameState state = AppGlobals.gameState; // Game state instance
         public static readonly Character[] Characters = new Character[3]
         {
             new Character("Bird"),
@@ -31,6 +33,7 @@ namespace FlappyBirdGame
 
         private void button1_Click(object sender, EventArgs e)
         {
+            state.InMainMenu();
             this.Close();
         }
 

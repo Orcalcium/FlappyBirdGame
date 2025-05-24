@@ -4,27 +4,28 @@ using System.Windows.Forms;
  
 
 namespace FlappyBirdGame
-{ 
-    
-   
+{
+
+
     // The following class is used to represent a character
     // It contains a name and an image
     // For now the image member doesn't need to be implemented
     public partial class MainMenu : Form
     {
-
+        GameState state = AppGlobals.gameState;
         private Label titleLabel;
         public MainMenu()
         {
+            titleLabel=new Label();
             InitializeComponent();
         }
 
         private void StartButton_Click(object sender, EventArgs e)
         {
+            state.InGame();
             this.Hide();
             var gameForm = new GameForm();
             gameForm.ShowDialog();
-            gameForm.GameLoop();
         }
         private void OptionButton_Click(object sender, EventArgs e)
         {
@@ -49,6 +50,9 @@ namespace FlappyBirdGame
             }
         }
 
+        private void MainMenu_Load(object sender, EventArgs e)
+        {
 
+        }
     }
 }

@@ -30,92 +30,62 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.Text = "Flappy bird";
-            this.Size = new Size(AppGlobals.FormWidth, AppGlobals.FormHeight);
-
-            //Determine title specifications
-            Font titleFont = new Font("Arial", 48, FontStyle.Bold);
-            int titleWidth = TextRenderer.MeasureText("Flappy Bird", titleFont).Width;
-            int titleCenterX = (AppGlobals.FormWidth - titleWidth) / 2;
-            int titleCenterY = 40;
-            titleLabel = new Label
-            {
-                Text = "Flappy Bird",
-                Font = titleFont,
-                Location = new Point(titleCenterX, titleCenterY),
-                AutoSize = true
-            };
-            this.Controls.Add(titleLabel);
-            int buttonWidth = 120;
-            int buttonHeight = 40;
-
-            // Button 1: Start
-            int btn1CenterX = (AppGlobals.FormWidth - buttonWidth) / 2;
-            int btn1Y = AppGlobals.FormHeight / 2 - (buttonHeight + 20);
-            Button startButton = new Button
-            {
-                Text = buttonNames[0],
-                Location = new Point(btn1CenterX, btn1Y),
-                Size = new Size(buttonWidth, buttonHeight)
-            };
-            this.Controls.Add(startButton);
-            startButton.Click += new EventHandler(StartButton_Click);
-
-            // Button 2: Option
-            int btn2CenterX = (AppGlobals.FormWidth - buttonWidth) / 2;
-            int btn2Y = AppGlobals.FormHeight / 2;
-            Button optionButton = new Button
-            {
-                Text = buttonNames[1],
-                Location = new Point(btn2CenterX, btn2Y),
-                Size = new Size(buttonWidth, buttonHeight)
-            };
-            this.Controls.Add(optionButton);
-            optionButton.Click += new EventHandler(OptionButton_Click);
-
-            // Button 3: Quit
-            int btn3CenterX = (AppGlobals.FormWidth - buttonWidth) / 2;
-            int btn3Y = AppGlobals.FormHeight / 2 + (buttonHeight + 20);
-            Button quitButton = new Button
-            {
-                Text = buttonNames[2],
-                Location = new Point(btn3CenterX, btn3Y),
-                Size = new Size(buttonWidth, buttonHeight)
-            };
-            this.Controls.Add(quitButton);
-            quitButton.Click += new EventHandler(QuitButton_Click);
-            {
-                int btnCenterX = (AppGlobals.FormWidth - buttonWidth) / 2;
-                int buttonY = AppGlobals.FormHeight / 2 + (2 - 1) * (buttonHeight + 20);
-                menuButtons[0] = new Button
-                {
-                    Text = buttonNames[0],
-                    Location = new Point(btnCenterX, buttonY),
-                    Size = new Size(buttonWidth, 40)
-                };
-                this.Controls.Add(menuButtons[0]);
-                // Create and configure the button
-                menuButtons[1] = new Button
-                {
-                    Text = buttonNames[1],
-                    Location = new Point(btnCenterX, buttonY),
-                    Size = new Size(buttonWidth, 40)
-                };
-                this.Controls.Add(menuButtons[1]);
-                menuButtons[2] = new Button
-                {
-                    Text = buttonNames[2],
-                    Location = new Point(btnCenterX, buttonY),
-                    Size = new Size(buttonWidth, 40)
-                };
-                this.Controls.Add(menuButtons[2]);
-            }
-            menuButtons[0].Click += new EventHandler(StartButton_Click);
-            menuButtons[1].Click += new EventHandler(OptionButton_Click);
-            menuButtons[2].Click += new EventHandler(QuitButton_Click);
-
+            titleLabel = new Label();
+            startButton = new Button();
+            optionButton = new Button();
+            quitButton = new Button();
+            SuspendLayout();
+            // 
+            // titleLabel
+            // 
+            titleLabel.Location = new Point(350, 50); // Centered at the top
+            titleLabel.Name = "titleLabel";
+            titleLabel.Size = new Size(200, 50);
+            titleLabel.Text = "Flappy Bird";
+            titleLabel.Font = new Font("Arial", 24, FontStyle.Bold);
+            titleLabel.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // startButton
+            // 
+            startButton.Location = new Point(375, 150); // Below the title
+            startButton.Name = "startButton";
+            startButton.Size = new Size(150, 50);
+            startButton.Text = "Start";
+            startButton.Click += StartButton_Click;
+            // 
+            // optionButton
+            // 
+            optionButton.Location = new Point(375, 220); // Below the Start button
+            optionButton.Name = "optionButton";
+            optionButton.Size = new Size(150, 50);
+            optionButton.Text = "Options";
+            optionButton.Click += OptionButton_Click;
+            // 
+            // quitButton
+            // 
+            quitButton.Location = new Point(375, 290); // Below the Options button
+            quitButton.Name = "quitButton";
+            quitButton.Size = new Size(150, 50);
+            quitButton.Text = "Quit";
+            quitButton.Click += QuitButton_Click;
+            // 
+            // MainMenu
+            // 
+            ClientSize = new Size(882, 553);
+            Controls.Add(titleLabel);
+            Controls.Add(startButton);
+            Controls.Add(optionButton);
+            Controls.Add(quitButton);
+            Name = "MainMenu";
+            Text = "Flappy Bird";
+            Load += MainMenu_Load;
+            ResumeLayout(false);
         }
 
         #endregion
+
+        private Button startButton;
+        private Button optionButton;
+        private Button quitButton;
     }
 }

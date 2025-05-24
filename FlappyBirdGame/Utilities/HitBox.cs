@@ -32,23 +32,32 @@ namespace FlappyBirdGame.Utilities
             this.verts[2] = vert3;
             this.verts[3] = vert4;
         }
-        private bool Inside(Vertex vert, HitBox hitbox)
+        static private bool Inside(Vertex vert, HitBox hitbox, Transform2d vertTransform, Transform2d hitBoxTransform)
         {
-            if (vert.x >= hitbox.verts[0].x && vert.x <= hitbox.verts[2].x && vert.y >= hitbox.verts[0].y && vert.y <= hitbox.verts[2].y)
+            float transformedVertX = vert.x * vertTransform.scale.x + vertTransform.position.x;
+            float transformedVertY = vert.y * vertTransform.scale.y + vertTransform.position.y;
+
+            float hitboxMinX = hitbox.verts[0].x * hitBoxTransform.scale.x + hitBoxTransform.position.x;
+            float hitboxMaxX = hitbox.verts[2].x * hitBoxTransform.scale.x + hitBoxTransform.position.x;
+            float hitboxMinY = hitbox.verts[0].y * hitBoxTransform.scale.y + hitBoxTransform.position.y;
+            float hitboxMaxY = hitbox.verts[2].y * hitBoxTransform.scale.y + hitBoxTransform.position.y;
+
+            if (transformedVertX >= hitboxMinX && transformedVertX <= hitboxMaxX &&
+                transformedVertY >= hitboxMinY && transformedVertY <= hitboxMaxY)
             {
                 return true;
             }
             return false;
         }
-        public bool isCollided(HitBox hitbox1, HitBox hitbox2)
+        static public bool IsCollided(HitBox hitbox1, HitBox hitbox2,Transform2d transform1, Transform2d transform2)
         {
-            bool overlap = false;
+
+            
             foreach(Vertex vert in hitbox1.verts)
             {
-                if(Inside(vert, hitbox2))
+                if(Inside(vert, hitbox2,transform1,transform2))
                 {
-                    overlap = true;
-                    break;
+                    return true;
                 }
             }
                 return false;

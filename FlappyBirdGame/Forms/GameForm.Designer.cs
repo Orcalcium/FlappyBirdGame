@@ -1,4 +1,6 @@
-﻿namespace FlappyBirdGame
+﻿using FlappyBirdGame.Objects;
+
+namespace FlappyBirdGame
 {
     partial class GameForm
     {
@@ -28,8 +30,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            pillar = new Pillar(100f, 200f, 50, 100, true);
             btnPause = new Button();
             SuspendLayout();
+            Controls.Add(pillar.button); // Add the pillar to the form for demonstration purposes
             // 
             // btnPause
             // 
@@ -49,6 +53,7 @@
             Controls.Add(btnPause);
             Name = "GameForm";
             Text = "GameForm";
+            Load += GameForm_Load_1;
             ResumeLayout(false);
 
         }
