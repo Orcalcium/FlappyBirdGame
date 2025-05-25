@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FlappyBirdGame
 {
-    internal class Transform2d
+    public class Transform2d
     {
         public Vector2 position { get; set; }
         public Vector2 scale { get; set; }

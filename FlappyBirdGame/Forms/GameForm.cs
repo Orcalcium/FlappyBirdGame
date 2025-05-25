@@ -100,7 +100,7 @@ namespace FlappyBirdGame
         private void IncreasePillarSpeed()
         {
             pillarSpeed *=1.5f; // Increase the speed by 0.5 units
-            pillarTimer.Interval = (int)(pillarSpawnRate / pillarSpeed); // Adjust the spawn rate based on the new speed
+            pillarTimer.Interval = Math.Max((int)(pillarSpawnRate / pillarSpeed),1); // Adjust the spawn rate based on the new speed
         }
 
         private void btnPause_Click(object sender, EventArgs e)

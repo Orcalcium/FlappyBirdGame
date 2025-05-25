@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FlappyBirdGame.Utilities
 {
-    internal class Vertex
+    public class Vertex
     {
         public float x;
         public float y;
@@ -16,7 +16,7 @@ namespace FlappyBirdGame.Utilities
             this.y = y;
         }
     }
-    internal class HitBox
+    public class HitBox
     {
         private Vertex[] verts = new Vertex[4]
         {
