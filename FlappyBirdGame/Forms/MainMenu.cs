@@ -12,7 +12,7 @@ namespace FlappyBirdGame
     // For now the image member doesn't need to be implemented
     public partial class MainMenu : Form
     {
-        GameState state = AppGlobals.gameState;
+        GameState state = AppGlobals.GameState;
         private Label titleLabel;
         public MainMenu()
         {

@@ -17,15 +17,10 @@ namespace FlappyBirdGame
     public partial class OptionForm : Form
     {
         public int AppVolume = 50; // Default volume level
-        GameState state = AppGlobals.gameState; // Game state instance
-        public static readonly Character[] Characters = new Character[3]
-        {
-            new Character("Bird"),
-            new Character("Cat"),
-            new Character("Dog")
-        }; // Character options
+        GameState state = AppGlobals.GameState; // Game state instance
 
-        public static Character SelectedCharacter = Characters[0]; // Default selected character
+
+        public static Character SelectedCharacter = AppGlobals.Characters[0]; // Default selected character
         public OptionForm()
         {
             InitializeComponent();
@@ -39,17 +34,17 @@ namespace FlappyBirdGame
 
         private void button4_Click(object sender, EventArgs e)
         {
-            SelectedCharacter = Characters[0];
+            SelectedCharacter = AppGlobals.Characters[0];
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            SelectedCharacter = Characters[2];
+            SelectedCharacter = AppGlobals.Characters[1];
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            SelectedCharacter = Characters[1];
+            SelectedCharacter = AppGlobals.Characters[2];
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)

@@ -15,22 +15,21 @@ namespace FlappyBirdGame
     {
         PauseForm transpause;
         List<Pillar> pillars = new List<Pillar>();
-        GameState state = AppGlobals.gameState;
+        GameState state = AppGlobals.GameState;
         private System.Windows.Forms.Timer gameLoopTimer;
         private System.Windows.Forms.Timer pillarTimer;
         private System.Windows.Forms.Timer pillarSpeedUpTimer;
         private float pillarSpeed = 1f; // Speed at which pillars move
         private float pillarSpawnRate = 4000f; // Time in seconds between pillar spawns
         private float pillarSpeedUpRate = 10000f; // Time in seconds to increase pillar speed
+        private Character character = AppGlobals.SelectedCharacter; // Selected character from AppGlobals
         public GameForm()
         {
-            pillars.Add(new Pillar(this.ClientSize.Width, this.ClientSize.Height, 50, 150, true));
-            pillars.Add(new Pillar(this.ClientSize.Width, 0f, 50, 150, false));
             InitializeComponent();
             transpause = new PauseForm(this);
             gameLoopTimer = new System.Windows.Forms.Timer
             {
-                Interval = (int)AppGlobals.refreshRate // Set the timer interval to 1 second (1000 ms)
+                Interval = (int)AppGlobals.RefreshRate // Set the timer interval to 1 second (1000 ms)
             };
             gameLoopTimer.Tick += (sender, e) => GameLoop(); // Attach the Tick event to the OnTimerElapsed method
             gameLoopTimer.Start();
@@ -46,6 +45,7 @@ namespace FlappyBirdGame
             };
             pillarSpeedUpTimer.Tick += (sender, e) => IncreasePillarSpeed(); // Attach the Tick event to the IncreasePillarSpeed method
             pillarSpeedUpTimer.Start();
+            SpawnCharacter();
         }
 
         private void GameLoop()
@@ -65,8 +65,16 @@ namespace FlappyBirdGame
                 pillar.Update();
             }
 
-        }
+            character.Update(); // Update the character's position and state
 
+        }
+        private void SpawnCharacter()
+        {
+            // Create a character instance based on the selected character
+            character.transform.position = new Vector2(100, this.ClientSize.Height / 2); // Set initial position
+            character.button.Location = new Point((int)character.transform.position.x, (int)character.transform.position.y);
+            Controls.Add(character.button); // Add the character to the form for demonstration purposes
+        }
         private void SpawnPillar()
         {
             // Create a random gap between the top and bottom pillars

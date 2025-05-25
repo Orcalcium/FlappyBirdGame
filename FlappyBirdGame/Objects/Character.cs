@@ -40,11 +40,5 @@ namespace FlappyBirdGame.Objects
             this.button.Location = new Point((int)transform.position.x, (int)transform.position.y);
         }
         //public Image CharacterImage { get; set; }
-
-        public Character(string name)
-        {
-            this.name = name;
-            //CharacterImage = characterImage;
-        }
     }
 }

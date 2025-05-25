@@ -32,11 +32,6 @@ namespace FlappyBirdGame
         {
             btnPause = new Button();
             SuspendLayout();
-            foreach(Pillar pillar in pillars)
-            {
-                Controls.Add(pillar.button); // Add the pillar to the form for demonstration purposes
-            }
-            
             // 
             // btnPause
             // 
