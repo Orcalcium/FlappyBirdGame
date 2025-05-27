@@ -15,9 +15,13 @@ namespace FlappyBirdGame.Objects
         public bool isTop { get; set; }
         public Button button { get; private set; }
 
+        public float width;
+        public float height;
 
         public Character(float x, float y, float width, float height,string name)
         {
+            this.width = width;
+            this.height = height;
             this.transform.position.x = x;
             this.transform.position.y = y;
             this.name = name;
@@ -31,13 +35,13 @@ namespace FlappyBirdGame.Objects
             // Initialize the button
             button = new Button();
 
-            button.Location = new Point((int)transform.position.x, (int)transform.position.y);
+            button.Location = new Point((int)transform.position.x-(int)width/2, (int)transform.position.y-(int)height/2);
             button.Size = new Size((int)width, (int)height);
 
         }
         public void Update()
         {
-            this.button.Location = new Point((int)transform.position.x, (int)transform.position.y);
+            this.button.Location = new Point((int)transform.position.x - (int)width/ 2, (int)transform.position.y - (int)height / 2);
         }
         //public Image CharacterImage { get; set; }
     }

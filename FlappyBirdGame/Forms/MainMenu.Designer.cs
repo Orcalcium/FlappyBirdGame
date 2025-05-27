@@ -30,6 +30,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenu));
             titleLabel = new Label();
             startButton = new Button();
             optionButton = new Button();
@@ -38,39 +39,59 @@
             // 
             // titleLabel
             // 
-            titleLabel.Location = new Point(350, 50); // Centered at the top
+            titleLabel.Font = new Font("Noto Sans Mono CJK TC Bold", 5.99999952F, FontStyle.Bold, GraphicsUnit.Point, 128);
+            titleLabel.ForeColor = SystemColors.Control;
+            titleLabel.Location = new Point(24, 93);
             titleLabel.Name = "titleLabel";
-            titleLabel.Size = new Size(200, 50);
-            titleLabel.Text = "Flappy Bird";
-            titleLabel.Font = new Font("Arial", 24, FontStyle.Bold);
+            titleLabel.Size = new Size(834, 113);
+            titleLabel.TabIndex = 0;
+            titleLabel.Text = resources.GetString("titleLabel.Text");
             titleLabel.TextAlign = ContentAlignment.MiddleCenter;
+            titleLabel.Click += titleLabel_Click;
             // 
             // startButton
             // 
-            startButton.Location = new Point(375, 150); // Below the title
+            startButton.BackColor = SystemColors.ControlText;
+            startButton.Font = new Font("Noto Sans Mono CJK TC Bold", 3F, FontStyle.Bold);
+            startButton.ForeColor = SystemColors.Control;
+            startButton.Location = new Point(287, 209);
             startButton.Name = "startButton";
-            startButton.Size = new Size(150, 50);
-            startButton.Text = "Start";
+            startButton.Size = new Size(299, 68);
+            startButton.TabIndex = 1;
+            startButton.Text = resources.GetString("startButton.Text");
+            startButton.UseVisualStyleBackColor = false;
             startButton.Click += StartButton_Click;
             // 
             // optionButton
             // 
-            optionButton.Location = new Point(375, 220); // Below the Start button
+            optionButton.BackColor = SystemColors.ControlText;
+            optionButton.Font = new Font("Noto Sans Mono CJK TC Bold", 3F, FontStyle.Bold);
+            optionButton.ForeColor = SystemColors.Control;
+            optionButton.Location = new Point(287, 302);
             optionButton.Name = "optionButton";
-            optionButton.Size = new Size(150, 50);
-            optionButton.Text = "Options";
+            optionButton.Size = new Size(299, 68);
+            optionButton.TabIndex = 2;
+            optionButton.Text = resources.GetString("optionButton.Text");
+            optionButton.UseVisualStyleBackColor = false;
             optionButton.Click += OptionButton_Click;
             // 
             // quitButton
             // 
-            quitButton.Location = new Point(375, 290); // Below the Options button
+            quitButton.BackColor = SystemColors.Control;
+            quitButton.Font = new Font("Noto Sans Mono CJK TC Bold", 3F, FontStyle.Bold);
+            quitButton.Location = new Point(287, 395);
             quitButton.Name = "quitButton";
-            quitButton.Size = new Size(150, 50);
-            quitButton.Text = "Quit";
+            quitButton.Size = new Size(299, 68);
+            quitButton.TabIndex = 3;
+            quitButton.Text = " ██████╗ ██╗   ██╗██╗████████╗\r\n██╔═══██╗██║   ██║██║╚══██╔══╝\r\n██║   ██║██║   ██║██║   ██║   \r\n██║▄▄ ██║██║   ██║██║   ██║   \r\n╚██████╔╝╚██████╔╝██║   ██║   \r\n ╚══▀▀═╝  ╚═════╝ ╚═╝   ╚═╝   ";
+            quitButton.UseVisualStyleBackColor = false;
             quitButton.Click += QuitButton_Click;
             // 
             // MainMenu
             // 
+            AutoScaleDimensions = new SizeF(9F, 19F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.ControlText;
             ClientSize = new Size(882, 553);
             Controls.Add(titleLabel);
             Controls.Add(startButton);

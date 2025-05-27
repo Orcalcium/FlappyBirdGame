@@ -16,7 +16,21 @@ namespace FlappyBirdGame
     {
         private GameForm gameForm; // Reference to the main game form
         GameState state = AppGlobals.GameState; // Game state instance
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                const int WS_SYSMENU = 0x80000; // System menu (close button)
+                const int WS_MINIMIZEBOX = 0x20000; // Minimize button
+                const int WS_MAXIMIZEBOX = 0x10000; // Maximize button
 
+                CreateParams cp = base.CreateParams;
+                cp.Style &= ~WS_SYSMENU; // Disable close button
+                cp.Style &= ~WS_MINIMIZEBOX; // Disable minimize button
+                cp.Style &= ~WS_MAXIMIZEBOX; // Disable maximize button
+                return cp;
+            }
+        }
         public PauseForm(GameForm gameForm)
         {
             this.gameForm = gameForm;
@@ -27,6 +41,7 @@ namespace FlappyBirdGame
 
         private void PauseForm_Load(object sender, EventArgs e)
         {
+            this.Text = "";
             label1.Text = "Paused";
             btnResume.Text = "Resume";
             btnQuit.Text = "Quit";

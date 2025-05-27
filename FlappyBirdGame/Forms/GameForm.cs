@@ -13,71 +13,134 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using FlappyBirdGame.Utilities;
 
 namespace FlappyBirdGame
 {
-    public static class KeyboardHelper
+    public class KeyStateTracker
     {
-        [DllImport("user32.dll")]
-        private static extern short GetAsyncKeyState(int vKey);
+        private static HashSet<Keys> pressedKeys = new HashSet<Keys>();
 
         public static bool IsKeyDown(Keys key)
         {
-            return (GetAsyncKeyState((int)key) & 0x8000) != 0;
+            return pressedKeys.Contains(key);
+        }
+
+        public static void SetKeyState(Keys key, bool isDown)
+        {
+            if (isDown)
+                pressedKeys.Add(key);
+            else
+                pressedKeys.Remove(key);
         }
     }
     public partial class GameForm : Form
     {
+        
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                const int WS_SYSMENU = 0x80000; // System menu (close button)
+                const int WS_MINIMIZEBOX = 0x20000; // Minimize button
+                const int WS_MAXIMIZEBOX = 0x10000; // Maximize button
+
+                CreateParams cp = base.CreateParams;
+                cp.Style &= ~WS_SYSMENU; // Disable close button
+                cp.Style &= ~WS_MINIMIZEBOX; // Disable minimize button
+                cp.Style &= ~WS_MAXIMIZEBOX; // Disable maximize button
+                return cp;
+            }
+        }
         PauseForm transpause;
         List<Pillar> pillars = new List<Pillar>();
         private Character character = AppGlobals.SelectedCharacter;
         GameState state = AppGlobals.GameState;
-        private System.Windows.Forms.Timer gameLoopTimer;
-        private System.Windows.Forms.Timer pillarTimer;
-        private System.Windows.Forms.Timer pillarSpeedUpTimer;
-        private System.Windows.Forms.Timer jumpTimer; // Timer for jump duration
+
         private float pillarSpeed = 1f; // Speed at which pillars move
-        private float pillarSpawnRate = 4000f; // Time in seconds between pillar spawns
+        private float pillarSpawnRate = 6000f; // Time in seconds between pillar spawns
         private float pillarSpeedUpRate = 10000f; // Time in seconds to increase pillar speed
         private Vector2 characterSpeed = new Vector2(0f, 0f); // Speed of the character
         private bool isJumping = false; // Flag to check if the character is jumping
         private float jumpVelocity = -3f; // Initial jump velocity
         private float gravity = 1f; // Gravity effect on the character
-
+        private System.Windows.Forms.Timer mainTimer;
+        private float elapsedPillarSpawn = 0f;
+        private float elapsedPillarSpeedUp = 0f;
+        private float elapsedJump = 0f;
+        private readonly float jumpDuration = 500f; // ms
         public GameForm()
         {
+            this.StartPosition = FormStartPosition.CenterScreen;
+            SuspendLayout();
             InitializeComponent();
+            this.Text = "";
+            this.KeyPreview = true;
+            this.KeyDown += GameForm_KeyDown;
+            this.KeyUp += GameForm_KeyUp;
+
             transpause = new PauseForm(this);
-            gameLoopTimer = new System.Windows.Forms.Timer
+
+            mainTimer = new System.Windows.Forms.Timer
             {
-                Interval = (int)AppGlobals.RefreshRate // Set the timer interval to 1 second (1000 ms)
+                Interval = (int)AppGlobals.RefreshRate // e.g., 16ms for ~60fps
             };
-            gameLoopTimer.Tick += (sender, e) => GameLoop(); // Attach the Tick event to the OnTimerElapsed method
-            gameLoopTimer.Start();
-            pillarTimer = new System.Windows.Forms.Timer
-            {
-                Interval = (int)pillarSpawnRate // Set the timer interval to 1 second (1000 ms)
-            };
-            pillarTimer.Tick += (sender, e) => SpawnPillar(); // Attach the Tick event to the SpawnPillar method
-            pillarTimer.Start();
-            pillarSpeedUpTimer = new System.Windows.Forms.Timer
-            {
-                Interval = (int)pillarSpeedUpRate // Set the timer interval to 10 seconds (10000 ms)
-            };
-            pillarSpeedUpTimer.Tick += (sender, e) => IncreasePillarSpeed(); // Attach the Tick event to the IncreasePillarSpeed method
-            pillarSpeedUpTimer.Start();
-            // Initialize the jump timer
-            jumpTimer = new System.Windows.Forms.Timer
-            {
-                Interval = 500 // Set the jump duration to 500ms (adjust as needed)
-            };
-            jumpTimer.Tick += (sender, e) =>
-            {
-                isJumping = false; // Reset the jump state
-                jumpTimer.Stop(); // Stop the timer
-            };
+            mainTimer.Tick += MainTimer_Tick;
+            mainTimer.Start();
 
             SpawnCharacter();
+            ResumeLayout();
+
+            SpawnCharacter();
+            ResumeLayout();
+        }
+        private void MainTimer_Tick(object sender, EventArgs e)
+        {
+            float delta = mainTimer.Interval;
+
+            if (state.IsInGame())
+            {
+                // Game loop logic
+                GameLoop();
+
+                // Pillar spawn logic
+                elapsedPillarSpawn += delta;
+                if (elapsedPillarSpawn >= pillarSpawnRate)
+                {
+                    SpawnPillar();
+                    elapsedPillarSpawn = 0f;
+                }
+
+                // Pillar speed up logic
+                elapsedPillarSpeedUp += delta;
+                if (elapsedPillarSpeedUp >= pillarSpeedUpRate)
+                {
+                    IncreasePillarSpeed();
+                    elapsedPillarSpeedUp = 0f;
+                }
+
+                // Jump logic
+                if (isJumping)
+                {
+                    elapsedJump += delta;
+                    if (elapsedJump >= jumpDuration)
+                    {
+                        isJumping = false;
+                        elapsedJump = 0f;
+                    }
+                }
+            }
+        }
+        private void GameForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            KeyStateTracker.SetKeyState(e.KeyCode, true);
+            e.Handled = true;
+        }
+
+        private void GameForm_KeyUp(object sender, KeyEventArgs e)
+        {
+            KeyStateTracker.SetKeyState(e.KeyCode, false);
+            e.Handled = true;
         }
 
         private void GameLoop()
@@ -87,23 +150,57 @@ namespace FlappyBirdGame
             if (state.IsInGame())
             {
                 foreach (Pillar pillar in pillars)
+                {
                     pillar.transform.Translate(new Vector2(-pillarSpeed, 0f));
+                  
+                }
+                    
                 CharacterMove();
-            }
-
-            //update the compnents to show result
-            foreach (Pillar pillar in pillars)
-            {
-                pillar.Update();
+                //update the compnents to show result
+                foreach (Pillar pillar in pillars)
+                {
+                    pillar.Update();
+                }
+                
+                CheckCollisions();
             }
 
         }
 
+        private void CheckCollisions()
+        {
+            foreach(Pillar pillar in pillars)
+            {
+                bool flag = false;
+                if (HitBox.IsCollided(character.hitbox, pillar.hitbox, character.transform, pillar.transform) )
+                {
+                    flag = true;
+                }
+                if(character.transform.position.y < 0 || character.transform.position.y > this.ClientSize.Height)
+                {
+                    flag = true;
+                }
+
+                if (flag)
+                {
+                    state.GameOver(); // Trigger game over if character collides with a pillar
+                    PuaseTimers(); // Pause the game timers
+                    transpause.Location = this.Location;
+                    transpause.StartPosition = this.StartPosition;
+                    transpause.FormClosing += delegate { this.Show(); };
+                    transpause.Show();
+                    this.Hide();
+                    return; // Exit the game loop to prevent further processing
+                }
+            }
+        }
+
         private void SpawnPillar()
         {
+            SuspendLayout();
             // Create a random gap between the top and bottom pillars
             Random random = new Random();
-            int gapHeight = random.Next(50, 200); // Random gap height between 100 and 200 pixels
+            int gapHeight = random.Next(75, 225); // Random gap height between 100 and 200 pixels
             int gapWidth = 150; // Width of the gap
             int bottomPillarLength = 550; // Height of each pillar
 
@@ -111,10 +208,11 @@ namespace FlappyBirdGame
             pillars.Add(new Pillar(this.ClientSize.Width, 0f, 50, gapHeight, true));
 
             // Add the bottom pillar, positioned below the gap
-            pillars.Add(new Pillar(this.ClientSize.Width, gapHeight + gapWidth, 50, bottomPillarLength, false));
+            pillars.Add(new Pillar(this.ClientSize.Width, gapHeight + gapWidth+bottomPillarLength/2, 50, bottomPillarLength, false));
             foreach (Pillar pillar in pillars)
             {
-                Controls.Add(pillar.button); // Add the pillar to the form for demonstration purposes
+                Controls.Add(pillar.panel); // Add the pillar to the form for demonstration purposes
+                pillar.Update();
             }
 
             // Remove pillars that are out of bounds
@@ -123,10 +221,11 @@ namespace FlappyBirdGame
                 Pillar pillar = pillars[i];
                 if (pillar.transform.position.x < -100)
                 {
-                    Controls.Remove(pillar.button); // Remove the pillar's button from the form
+                    Controls.Remove(pillar.panel); // Remove the pillar's button from the form
                     pillars.RemoveAt(i); // Remove the pillar from the list
                 }
             }
+            ResumeLayout();
         }
 
         private void SpawnCharacter()
@@ -134,35 +233,36 @@ namespace FlappyBirdGame
             character.transform.position.x = 100; // Set the initial x position of the character
             character.transform.position.y = this.ClientSize.Height / 2; // Set the initial y position of the character
             Controls.Add(character.button); // Add the character's button to the form
+            character.Update();
         }
 
         private void IncreasePillarSpeed()
         {
             pillarSpeed *= 1.5f; // Increase the speed by 0.5 units
-            pillarTimer.Interval = Math.Max((int)(pillarSpawnRate / pillarSpeed), 1); // Adjust the spawn rate based on the new speed
+            pillarSpawnRate = Math.Max(pillarSpawnRate / 1.5f, 500f);
         }
         private void CharacterMove()
         {
             if (state.IsInGame())
             {
                 // Check for jump input
-                if ((KeyboardHelper.IsKeyDown(Keys.Z) || KeyboardHelper.IsKeyDown(Keys.Up)) && !isJumping)
+                if ((KeyStateTracker.IsKeyDown(Keys.Z) || KeyStateTracker.IsKeyDown(Keys.Up)) && !isJumping)
                 {
-                    isJumping = true; // Set the jump flag
-                    character.transform.Translate(characterSpeed); // Apply upward velocity
-                    jumpTimer.Start(); // Start the jump timer
+                    isJumping = true;
+                    elapsedJump = 0f;
+                    character.transform.Translate(characterSpeed);
                 }
 
                 // Apply gravity to bring the character down
                 if (isJumping)
                 {
-                    character.transform.Translate(new Vector2(0, jumpVelocity)); // Simulate gravity
-                    characterSpeed = new Vector2(0f,0f);
+                    character.transform.Translate(new Vector2(0, jumpVelocity));
+                    characterSpeed = new Vector2(0f, 0f);
                 }
                 else
                 {
-                    characterSpeed.y += gravity; // Increase downward speed due to gravity
-                    character.transform.Translate(characterSpeed); // Apply gravity when not jumping
+                    characterSpeed.y += gravity;
+                    character.transform.Translate(characterSpeed);
                 }
                 character.Update();
             }
@@ -179,17 +279,12 @@ namespace FlappyBirdGame
         }
         public void PuaseTimers()
         {
-            gameLoopTimer.Stop();
-            pillarTimer.Stop();
-            pillarSpeedUpTimer.Stop();
-            jumpTimer.Stop();
+            mainTimer.Stop();
         }
+
         public void ResumeTimers()
         {
-            gameLoopTimer.Start();
-            pillarTimer.Start();
-            pillarSpeedUpTimer.Start();
-            jumpTimer.Start();
+            mainTimer.Start();
         }
         private void GameForm_Load(object sender, EventArgs e)
         {

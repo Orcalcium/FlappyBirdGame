@@ -11,9 +11,9 @@ namespace FlappyBirdGame
         public const int AppVolume = 50; // Default volume level
         public static readonly Character[] Characters = new Character[3]
         {
-            new Character(0,0,50,50,"Bird"),
-            new Character(0,0,50,50,"Cat"),
-            new Character(0,0,50,50,"Dog")
+            new Character(0,0,30,30,"Bird"),
+            new Character(0,0,30,30,"Cat"),
+            new Character(0,0,30,30,"Dog")
         }; // Character options
         public static GameState GameState = new GameState();
         public static Character SelectedCharacter = Characters[0]; // Default selected character

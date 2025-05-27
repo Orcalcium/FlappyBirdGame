@@ -28,54 +28,57 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.btnResume = new System.Windows.Forms.Button();
-            this.btnQuit = new System.Windows.Forms.Button();
-            this.SuspendLayout();
+            label1 = new Label();
+            btnResume = new Button();
+            btnQuit = new Button();
+            SuspendLayout();
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(132, 94);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(50, 18);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "label1";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            label1.AutoSize = true;
+            label1.Font = new Font("Microsoft JhengHei UI", 30F);
+            label1.Location = new Point(330, 67);
+            label1.Name = "label1";
+            label1.Size = new Size(169, 64);
+            label1.TabIndex = 0;
+            label1.Text = "label1";
+            label1.Click += label1_Click;
             // 
             // btnResume
             // 
-            this.btnResume.Location = new System.Drawing.Point(135, 151);
-            this.btnResume.Name = "btnResume";
-            this.btnResume.Size = new System.Drawing.Size(75, 23);
-            this.btnResume.TabIndex = 1;
-            this.btnResume.Text = "button1";
-            this.btnResume.UseVisualStyleBackColor = true;
-            this.btnResume.Click += new System.EventHandler(this.btnResume_Click);
+            btnResume.Font = new Font("Microsoft JhengHei UI", 20F);
+            btnResume.Location = new Point(330, 146);
+            btnResume.Name = "btnResume";
+            btnResume.Size = new Size(150, 150);
+            btnResume.TabIndex = 1;
+            btnResume.Text = "button1";
+            btnResume.UseVisualStyleBackColor = true;
+            btnResume.Click += btnResume_Click;
             // 
             // btnQuit
             // 
-            this.btnQuit.Location = new System.Drawing.Point(349, 151);
-            this.btnQuit.Name = "btnQuit";
-            this.btnQuit.Size = new System.Drawing.Size(75, 23);
-            this.btnQuit.TabIndex = 2;
-            this.btnQuit.Text = "button2";
-            this.btnQuit.UseVisualStyleBackColor = true;
-            this.btnQuit.Click += new System.EventHandler(this.btnQuit_Click);
+            btnQuit.Font = new Font("Microsoft JhengHei UI", 20F);
+            btnQuit.Location = new Point(330, 313);
+            btnQuit.Name = "btnQuit";
+            btnQuit.Size = new Size(150, 150);
+            btnQuit.TabIndex = 2;
+            btnQuit.Text = "button2";
+            btnQuit.UseVisualStyleBackColor = true;
+            btnQuit.Click += btnQuit_Click;
             // 
             // PauseForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.btnQuit);
-            this.Controls.Add(this.btnResume);
-            this.Controls.Add(this.label1);
-            this.Name = "PauseForm";
-            this.Text = "PauseForm";
-            this.Load += new System.EventHandler(this.PauseForm_Load);
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new SizeF(9F, 19F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(800, 475);
+            Controls.Add(btnQuit);
+            Controls.Add(btnResume);
+            Controls.Add(label1);
+            Name = "PauseForm";
+            Text = "PauseForm";
+            Load += PauseForm_Load;
+            ResumeLayout(false);
+            PerformLayout();
 
         }
 

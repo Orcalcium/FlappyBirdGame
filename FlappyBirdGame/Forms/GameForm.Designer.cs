@@ -47,7 +47,7 @@ namespace FlappyBirdGame
             // 
             AutoScaleDimensions = new SizeF(9F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 475);
+            ClientSize = new Size(882, 553);
             Controls.Add(btnPause);
             Name = "GameForm";
             Text = "GameForm";

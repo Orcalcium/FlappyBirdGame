@@ -12,11 +12,14 @@ namespace FlappyBirdGame.Objects
         public Transform2d transform { get; set; } = new Transform2d();
         public HitBox hitbox { get; set; }
         public bool isTop { get; set; }
-        public Button button { get; private set; }
+        public Panel panel { get; private set; }
 
-
+        public float width;
+        public float height;
         public Pillar(float x, float y, float width, float height, bool isTop)
         {
+            this.width = width;
+            this.height = height;
             this.transform.position.x = x;
             this.transform.position.y = y;
             hitbox = new HitBox(
@@ -29,15 +32,16 @@ namespace FlappyBirdGame.Objects
             this.isTop = isTop;
 
             // Initialize the button
-            button = new Button();
-
-            button.Location = new Point((int)transform.position.x, (int)transform.position.y);
-            button.Size = new Size((int)width, (int)height);
-
+            panel = new Panel {
+                Location = new Point((int)transform.position.x - (int)width / 2, (int)transform.position.y - (int)height / 2),
+                Size = new Size((int)width, (int)height),
+                BackColor = Color.White
+            };
         }
         public void Update()
         {
-            this.button.Location = new Point((int)transform.position.x, (int)transform.position.y);
+            this.panel.Location = new Point((int)transform.position.x - (int)width / 2, (int)transform.position.y - (int)height / 2);
         }
     }
 }
+

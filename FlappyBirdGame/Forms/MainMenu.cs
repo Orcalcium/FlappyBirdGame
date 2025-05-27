@@ -12,12 +12,30 @@ namespace FlappyBirdGame
     // For now the image member doesn't need to be implemented
     public partial class MainMenu : Form
     {
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                const int WS_SYSMENU = 0x80000; // System menu (close button)
+                const int WS_MINIMIZEBOX = 0x20000; // Minimize button
+                const int WS_MAXIMIZEBOX = 0x10000; // Maximize button
+
+                CreateParams cp = base.CreateParams;
+                cp.Style &= ~WS_SYSMENU; // Disable close button
+                cp.Style &= ~WS_MINIMIZEBOX; // Disable minimize button
+                cp.Style &= ~WS_MAXIMIZEBOX; // Disable maximize button
+                return cp;
+            }
+        }
+        
         GameState state = AppGlobals.GameState;
         private Label titleLabel;
         public MainMenu()
         {
-            titleLabel=new Label();
+            titleLabel = new Label();
+            this.StartPosition = FormStartPosition.CenterScreen;
             InitializeComponent();
+            this.Text = "";
         }
 
         private void StartButton_Click(object sender, EventArgs e)
@@ -34,23 +52,20 @@ namespace FlappyBirdGame
         }
         private void QuitButton_Click(object sender, EventArgs e)
         {
-            var result = MessageBox.Show(
-                "Exit Game?",
-                "Yes",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question
-                );
-            if (result == DialogResult.Yes)
+            foreach (Form form in Application.OpenForms.Cast<Form>().ToList())
             {
-                foreach (Form form in Application.OpenForms.Cast<Form>().ToList())
-                {
-                    form.Close();
-                }
-                Application.Exit();
+                form.Close();
             }
+            Application.Exit();
+            
         }
 
         private void MainMenu_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void titleLabel_Click(object sender, EventArgs e)
         {
 
         }
