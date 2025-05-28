@@ -43,18 +43,21 @@ namespace FlappyBirdGame
 
         private void button1_Click(object sender, EventArgs e)
         {
+            var mainMenu = Application.OpenForms.OfType<MainMenu>().FirstOrDefault();
+            mainMenu.pictureBox.Image = AppGlobals.characterImage; // Update the main menu character image
+            mainMenu.Refresh();
             state.InMainMenu();
             this.Close();
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            SelectedCharacter = AppGlobals.Characters[0];
+            AppGlobals.characterImage = Properties.Resources.green;
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            SelectedCharacter = AppGlobals.Characters[1];
+            AppGlobals.characterImage = Properties.Resources.StupidBird;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -66,7 +69,12 @@ namespace FlappyBirdGame
         {
             AppVolume = trackBar1.Value;
             volumelabel.Text = $"Volume: {AppVolume}";
+            AppGlobals.CharacterSize = (AppVolume+30)/5*3-10;
         }
 
+        private void volume_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

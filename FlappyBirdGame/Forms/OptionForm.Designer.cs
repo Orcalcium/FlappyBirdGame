@@ -33,7 +33,6 @@
             volume = new Label();
             trackBar1 = new TrackBar();
             character = new Label();
-            character3 = new Button();
             character2 = new Button();
             character1 = new Button();
             volumelabel = new Label();
@@ -55,7 +54,7 @@
             // 
             label.AutoSize = true;
             label.Font = new Font("Times New Roman", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label.Location = new Point(129, 10);
+            label.Location = new Point(138, 9);
             label.Name = "label";
             label.Size = new Size(122, 38);
             label.TabIndex = 1;
@@ -65,11 +64,12 @@
             // 
             volume.AutoSize = true;
             volume.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            volume.Location = new Point(158, 95);
+            volume.Location = new Point(178, 93);
             volume.Name = "volume";
-            volume.Size = new Size(68, 22);
+            volume.Size = new Size(44, 22);
             volume.TabIndex = 2;
-            volume.Text = "Volume";
+            volume.Text = "Size";
+            volume.Click += volume_Click;
             // 
             // trackBar1
             // 
@@ -93,33 +93,23 @@
             character.TabIndex = 4;
             character.Text = "character";
             // 
-            // character3
-            // 
-            character3.Location = new Point(262, 274);
-            character3.Name = "character3";
-            character3.Size = new Size(75, 42);
-            character3.TabIndex = 5;
-            character3.Text = "cat";
-            character3.UseVisualStyleBackColor = true;
-            character3.Click += button2_Click;
-            // 
             // character2
             // 
-            character2.Location = new Point(162, 274);
+            character2.Location = new Point(200, 280);
             character2.Name = "character2";
-            character2.Size = new Size(76, 42);
+            character2.Size = new Size(100, 54);
             character2.TabIndex = 6;
-            character2.Text = "dog";
+            character2.Text = "stupid bird";
             character2.UseVisualStyleBackColor = true;
             character2.Click += button3_Click;
             // 
             // character1
             // 
-            character1.Location = new Point(62, 274);
+            character1.Location = new Point(100, 280);
             character1.Name = "character1";
-            character1.Size = new Size(75, 42);
+            character1.Size = new Size(99, 54);
             character1.TabIndex = 7;
-            character1.Text = "bird";
+            character1.Text = "green bird";
             character1.UseVisualStyleBackColor = true;
             character1.Click += button4_Click;
             // 
@@ -140,7 +130,6 @@
             Controls.Add(volumelabel);
             Controls.Add(character1);
             Controls.Add(character2);
-            Controls.Add(character3);
             Controls.Add(character);
             Controls.Add(trackBar1);
             Controls.Add(volume);
@@ -161,7 +150,6 @@
         private System.Windows.Forms.Label volume;
         private System.Windows.Forms.TrackBar trackBar1;
         private System.Windows.Forms.Label character;
-        private System.Windows.Forms.Button character3;
         private System.Windows.Forms.Button character2;
         private System.Windows.Forms.Button character1;
         private System.Windows.Forms.Label volumelabel;

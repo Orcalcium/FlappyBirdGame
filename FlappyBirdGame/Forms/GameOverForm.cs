@@ -4,18 +4,14 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FlappyBirdGame
+namespace FlappyBirdGame.Forms
 {
-
-    public partial class PauseForm : Form
+    public partial class GameOverForm : Form
     {
-        private GameForm gameForm; // Reference to the main game form
-        GameState state = AppGlobals.GameState; // Game state instance
         protected override CreateParams CreateParams
         {
             get
@@ -31,40 +27,51 @@ namespace FlappyBirdGame
                 return cp;
             }
         }
-        public PauseForm(GameForm gameForm)
+        public string labelText
         {
-            this.gameForm = gameForm;
-            
+            get => label1.Text;
+            set => label1.Text = value;
+        }
+        public GameOverForm()
+        {
+            this.Name = "";
             InitializeComponent();
-        }
-
-
-        private void PauseForm_Load(object sender, EventArgs e)
-        {
-        }
-
-        private void btnResume_Click(object sender, EventArgs e)
-        {
-            gameForm.ResumeTimers();
-            state.InGame();
-            gameForm.Show();
-            this.Hide();
             
         }
+
         private void label1_Click(object sender, EventArgs e)
         {
 
         }
-        private void btnQuit_Click(object sender, EventArgs e)
+
+
+
+        private void btnMenu_Click(object sender, EventArgs e)
+        {
+            var mainMenu = Application.OpenForms.OfType<MainMenu>().FirstOrDefault();
+            if (mainMenu != null)
+            {
+                mainMenu.Show();
+                this.Close();
+                return;
+            }
+            mainMenu = new MainMenu();
+            mainMenu.Show();
+            this.Close();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
         {
             foreach (Form form in Application.OpenForms.Cast<Form>().ToList())
             {
                 form.Close();
             }
-            if (MessageBox.Show("Sure to quit?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                Application.Exit();
-            }
+            Application.Exit();
+        }
+
+        private void GameOverForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

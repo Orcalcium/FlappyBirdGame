@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PauseForm));
             label1 = new Label();
             btnResume = new Button();
             btnQuit = new Button();
@@ -36,40 +37,48 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Microsoft JhengHei UI", 30F);
-            label1.Location = new Point(330, 67);
+            label1.BackColor = Color.Transparent;
+            label1.Font = new Font("Noto Sans Mono CJK TC Bold", 6F, FontStyle.Bold);
+            label1.ForeColor = SystemColors.ControlLight;
+            label1.Location = new Point(176, 88);
             label1.Name = "label1";
-            label1.Size = new Size(169, 64);
+            label1.Size = new Size(482, 90);
             label1.TabIndex = 0;
-            label1.Text = "label1";
+            label1.Text = resources.GetString("label1.Text");
             label1.Click += label1_Click;
             // 
             // btnResume
             // 
-            btnResume.Font = new Font("Microsoft JhengHei UI", 20F);
-            btnResume.Location = new Point(330, 146);
+            btnResume.BackColor = Color.Turquoise;
+            btnResume.Font = new Font("Microsoft JhengHei UI", 4F);
+            btnResume.ForeColor = SystemColors.Control;
+            btnResume.Location = new Point(257, 199);
             btnResume.Name = "btnResume";
-            btnResume.Size = new Size(150, 150);
+            btnResume.Size = new Size(276, 97);
             btnResume.TabIndex = 1;
-            btnResume.Text = "button1";
-            btnResume.UseVisualStyleBackColor = true;
+            btnResume.Text = resources.GetString("btnResume.Text");
+            btnResume.UseVisualStyleBackColor = false;
             btnResume.Click += btnResume_Click;
             // 
             // btnQuit
             // 
-            btnQuit.Font = new Font("Microsoft JhengHei UI", 20F);
-            btnQuit.Location = new Point(330, 313);
+            btnQuit.BackColor = Color.Turquoise;
+            btnQuit.Font = new Font("Consolas", 5F, FontStyle.Bold);
+            btnQuit.ForeColor = Color.Linen;
+            btnQuit.Location = new Point(308, 302);
             btnQuit.Name = "btnQuit";
-            btnQuit.Size = new Size(150, 150);
+            btnQuit.Size = new Size(178, 81);
             btnQuit.TabIndex = 2;
-            btnQuit.Text = "button2";
-            btnQuit.UseVisualStyleBackColor = true;
+            btnQuit.Text = " ██████╗ ██╗   ██╗██╗████████╗\r\n██╔═══██╗██║   ██║██║╚══██╔══╝\r\n██║   ██║██║   ██║██║   ██║   \r\n██║▄▄ ██║██║   ██║██║   ██║   \r\n╚██████╔╝╚██████╔╝██║   ██║   \r\n ╚══▀▀═╝  ╚═════╝ ╚═╝   ╚═╝  ";
+            btnQuit.UseVisualStyleBackColor = false;
             btnQuit.Click += btnQuit_Click;
             // 
             // PauseForm
             // 
             AutoScaleDimensions = new SizeF(9F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackgroundImage = Properties.Resources.IMG_0667;
+            BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(800, 475);
             Controls.Add(btnQuit);
             Controls.Add(btnResume);

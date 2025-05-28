@@ -35,12 +35,16 @@
             startButton = new Button();
             optionButton = new Button();
             quitButton = new Button();
+            TextBox = new TextBox();
+            pictureBox = new PictureBox();
+            ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
             SuspendLayout();
             // 
             // titleLabel
             // 
+            titleLabel.BackColor = Color.Transparent;
             titleLabel.Font = new Font("Noto Sans Mono CJK TC Bold", 5.99999952F, FontStyle.Bold, GraphicsUnit.Point, 128);
-            titleLabel.ForeColor = SystemColors.Control;
+            titleLabel.ForeColor = Color.Ivory;
             titleLabel.Location = new Point(24, 93);
             titleLabel.Name = "titleLabel";
             titleLabel.Size = new Size(834, 113);
@@ -51,7 +55,7 @@
             // 
             // startButton
             // 
-            startButton.BackColor = SystemColors.ControlText;
+            startButton.BackColor = Color.Turquoise;
             startButton.Font = new Font("Noto Sans Mono CJK TC Bold", 3F, FontStyle.Bold);
             startButton.ForeColor = SystemColors.Control;
             startButton.Location = new Point(287, 209);
@@ -64,7 +68,7 @@
             // 
             // optionButton
             // 
-            optionButton.BackColor = SystemColors.ControlText;
+            optionButton.BackColor = Color.Turquoise;
             optionButton.Font = new Font("Noto Sans Mono CJK TC Bold", 3F, FontStyle.Bold);
             optionButton.ForeColor = SystemColors.Control;
             optionButton.Location = new Point(287, 302);
@@ -77,8 +81,9 @@
             // 
             // quitButton
             // 
-            quitButton.BackColor = SystemColors.Control;
+            quitButton.BackColor = Color.Aqua;
             quitButton.Font = new Font("Noto Sans Mono CJK TC Bold", 3F, FontStyle.Bold);
+            quitButton.ForeColor = Color.DarkOrange;
             quitButton.Location = new Point(287, 395);
             quitButton.Name = "quitButton";
             quitButton.Size = new Size(299, 68);
@@ -87,20 +92,48 @@
             quitButton.UseVisualStyleBackColor = false;
             quitButton.Click += QuitButton_Click;
             // 
+            // TextBox
+            // 
+            TextBox.BackColor = SystemColors.Info;
+            TextBox.Font = new Font("Microsoft JhengHei UI", 10F);
+            TextBox.Location = new Point(684, 270);
+            TextBox.Name = "TextBox";
+            TextBox.PlaceholderText = "name";
+            TextBox.Size = new Size(100, 29);
+            TextBox.TabIndex = 0;
+            TextBox.TextChanged += TextBox_TextChanged;
+            // 
+            // pictureBox
+            // 
+            pictureBox.BackColor = SystemColors.Control;
+            pictureBox.Image = AppGlobals.characterImage;
+            pictureBox.Location = new Point(674, 320);
+            pictureBox.Name = "pictureBox";
+            pictureBox.Size = new Size(120, 120);
+            pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox.TabIndex = 5;
+            pictureBox.TabStop = false;
+            // 
             // MainMenu
             // 
             AutoScaleDimensions = new SizeF(9F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlText;
+            BackgroundImage = Properties.Resources.IMG_0667;
+            BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(882, 553);
             Controls.Add(titleLabel);
             Controls.Add(startButton);
             Controls.Add(optionButton);
             Controls.Add(quitButton);
+            Controls.Add(TextBox);
+            Controls.Add(pictureBox);
             Name = "MainMenu";
             Text = "Flappy Bird";
             Load += MainMenu_Load;
+            ((System.ComponentModel.ISupportInitialize)pictureBox).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -108,5 +141,7 @@
         private Button startButton;
         private Button optionButton;
         private Button quitButton;
+        private TextBox TextBox;
+        public PictureBox pictureBox;
     }
 }

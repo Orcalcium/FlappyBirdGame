@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using FlappyBirdGame.Utilities;
+using FlappyBirdGame.Forms;
 
 namespace FlappyBirdGame
 {
@@ -52,7 +53,8 @@ namespace FlappyBirdGame
                 return cp;
             }
         }
-        PauseForm transpause;
+        PauseForm pauseform;
+        GameOverForm gameOverForm;
         List<Pillar> pillars = new List<Pillar>();
         private Character character = AppGlobals.SelectedCharacter;
         GameState state = AppGlobals.GameState;
@@ -72,27 +74,26 @@ namespace FlappyBirdGame
         public GameForm()
         {
             this.StartPosition = FormStartPosition.CenterScreen;
+
             SuspendLayout();
             InitializeComponent();
             this.Text = "";
             this.KeyPreview = true;
             this.KeyDown += GameForm_KeyDown;
             this.KeyUp += GameForm_KeyUp;
+            gameOverForm = new GameOverForm();
 
-            transpause = new PauseForm(this);
-
+            pauseform = new PauseForm(this);
+            
             mainTimer = new System.Windows.Forms.Timer
             {
                 Interval = (int)AppGlobals.RefreshRate // e.g., 16ms for ~60fps
             };
             mainTimer.Tick += MainTimer_Tick;
             mainTimer.Start();
-
             SpawnCharacter();
             ResumeLayout();
-
-            SpawnCharacter();
-            ResumeLayout();
+            SpawnPillar();
         }
         private void MainTimer_Tick(object sender, EventArgs e)
         {
@@ -163,6 +164,7 @@ namespace FlappyBirdGame
                 }
                 
                 CheckCollisions();
+                AppGlobals.score = (int)characterSpeed.y + (int)pillarSpeed;
             }
 
         }
@@ -171,25 +173,36 @@ namespace FlappyBirdGame
         {
             foreach(Pillar pillar in pillars)
             {
-                bool flag = false;
+                bool crashflag = false;
                 if (HitBox.IsCollided(character.hitbox, pillar.hitbox, character.transform, pillar.transform) )
                 {
-                    flag = true;
+                    crashflag = true;
                 }
                 if(character.transform.position.y < 0 || character.transform.position.y > this.ClientSize.Height)
                 {
-                    flag = true;
+                    crashflag = true;
                 }
 
-                if (flag)
+                if (crashflag)
                 {
                     state.GameOver(); // Trigger game over if character collides with a pillar
                     PuaseTimers(); // Pause the game timers
-                    transpause.Location = this.Location;
-                    transpause.StartPosition = this.StartPosition;
-                    transpause.FormClosing += delegate { this.Show(); };
-                    transpause.Show();
-                    this.Hide();
+                    gameOverForm.Location = this.Location;
+                    gameOverForm.StartPosition = this.StartPosition;
+                    if(character.transform.position.y < 0)
+                    {
+                        gameOverForm.labelText = $"{AppGlobals.id} crashed on ceiling \nwith a speed of {AppGlobals.score} km/s";
+                    }
+                    else if (character.transform.position.y > this.ClientSize.Height)
+                    {
+                        gameOverForm.labelText = $"{AppGlobals.id} crashed on floor \nwith a speed of {AppGlobals.score} km/s";
+                    }
+                    else
+                    {
+                        gameOverForm.labelText = $"{AppGlobals.id} crashed on a pillar \nwith a speed of {AppGlobals.score} km/s";
+                    }
+                    gameOverForm.Show();
+                    this.Close();
                     return; // Exit the game loop to prevent further processing
                 }
             }
@@ -230,6 +243,7 @@ namespace FlappyBirdGame
 
         private void SpawnCharacter()
         {
+            character = AppGlobals.SelectedCharacter; // Get the selected character from AppGlobals
             character.transform.position.x = 100; // Set the initial x position of the character
             character.transform.position.y = this.ClientSize.Height / 2; // Set the initial y position of the character
             Controls.Add(character.button); // Add the character's button to the form
@@ -269,12 +283,16 @@ namespace FlappyBirdGame
         }
         private void btnPause_Click(object sender, EventArgs e)
         {
+            pause();
+        }
+        private void pause()
+        {
             state.Pause();
             PuaseTimers();
-            transpause.Location = this.Location;
-            transpause.StartPosition = this.StartPosition;
-            transpause.FormClosing += delegate { this.Show(); };
-            transpause.Show();
+            pauseform.Location = this.Location;
+            pauseform.StartPosition = this.StartPosition;
+            pauseform.FormClosing += delegate { this.Show(); };
+            pauseform.Show();
             this.Hide();
         }
         public void PuaseTimers()

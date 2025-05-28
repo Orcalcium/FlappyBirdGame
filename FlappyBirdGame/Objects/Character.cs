@@ -34,6 +34,8 @@ namespace FlappyBirdGame.Objects
 
             // Initialize the button
             button = new Button();
+            button.BackgroundImage = AppGlobals.characterImage;
+            button.BackgroundImageLayout = ImageLayout.Stretch;
 
             button.Location = new Point((int)transform.position.x-(int)width/2, (int)transform.position.y-(int)height/2);
             button.Size = new Size((int)width, (int)height);
@@ -42,6 +44,14 @@ namespace FlappyBirdGame.Objects
         public void Update()
         {
             this.button.Location = new Point((int)transform.position.x - (int)width/ 2, (int)transform.position.y - (int)height / 2);
+            this.button.Size = new Size((int)width, (int)height);
+            this.hitbox = new HitBox(
+                new Vertex(-width / 2, -height / 2),
+                new Vertex(-width / 2, height / 2),
+                new Vertex(width / 2, height / 2),
+                new Vertex(width / 2, -height / 2)
+            );
+
         }
         //public Image CharacterImage { get; set; }
     }

@@ -27,7 +27,7 @@ namespace FlappyBirdGame
                 return cp;
             }
         }
-        
+
         GameState state = AppGlobals.GameState;
         private Label titleLabel;
         public MainMenu()
@@ -57,7 +57,7 @@ namespace FlappyBirdGame
                 form.Close();
             }
             Application.Exit();
-            
+
         }
 
         private void MainMenu_Load(object sender, EventArgs e)
@@ -68,6 +68,11 @@ namespace FlappyBirdGame
         private void titleLabel_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void TextBox_TextChanged(object sender, EventArgs e)
+        {
+            AppGlobals.id= TextBox.Text.Trim(); // Update the global id with the text from the TextBox
         }
     }
 }
