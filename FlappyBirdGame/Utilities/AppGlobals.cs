@@ -7,7 +7,7 @@ namespace FlappyBirdGame
         // Global constants
         public const int FormWidth = 900;
         public const int FormHeight = 600;
-        public static string id = "ㄐㄐ";
+        public static string id = "野獸先輩";
         public static int score = 0;
         public static int highestScore = 0;
         public static Image characterImage = Properties.Resources.StupidBird; // Default image for characters

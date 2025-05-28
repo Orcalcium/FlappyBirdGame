@@ -74,7 +74,7 @@ namespace FlappyBirdGame
         public GameForm()
         {
             this.StartPosition = FormStartPosition.CenterScreen;
-
+            character.button.BackgroundImage= AppGlobals.characterImage; // Set the character's image from AppGlobals
             SuspendLayout();
             InitializeComponent();
             this.Text = "";
@@ -165,6 +165,7 @@ namespace FlappyBirdGame
                 
                 CheckCollisions();
                 AppGlobals.score = (int)characterSpeed.y + (int)pillarSpeed;
+                AppGlobals.score *= 2;
             }
 
         }
@@ -191,15 +192,15 @@ namespace FlappyBirdGame
                     gameOverForm.StartPosition = this.StartPosition;
                     if(character.transform.position.y < 0)
                     {
-                        gameOverForm.labelText = $"{AppGlobals.id} crashed on ceiling \nwith a speed of {AppGlobals.score} km/s";
+                        gameOverForm.labelText = $"{AppGlobals.id} \ncrashed on ceiling \nwith a speed of {AppGlobals.score} km/s";
                     }
                     else if (character.transform.position.y > this.ClientSize.Height)
                     {
-                        gameOverForm.labelText = $"{AppGlobals.id} crashed on floor \nwith a speed of {AppGlobals.score} km/s";
+                        gameOverForm.labelText = $"{AppGlobals.id} \ncrashed on floor \nwith a speed of {AppGlobals.score} km/s";
                     }
                     else
                     {
-                        gameOverForm.labelText = $"{AppGlobals.id} crashed on a pillar \nwith a speed of {AppGlobals.score} km/s";
+                        gameOverForm.labelText = $"{AppGlobals.id} \ncrashed on a pillar \nwith a speed of {AppGlobals.score} km/s";
                     }
                     gameOverForm.Show();
                     this.Close();
