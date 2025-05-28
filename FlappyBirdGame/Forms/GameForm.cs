@@ -192,15 +192,15 @@ namespace FlappyBirdGame
                     gameOverForm.StartPosition = this.StartPosition;
                     if(character.transform.position.y < 0)
                     {
-                        gameOverForm.labelText = $"{AppGlobals.id} \ncrashed on ceiling \nwith a speed of {AppGlobals.score} km/s";
+                        gameOverForm.labelText = $"{AppGlobals.id} \ncrashed into ceiling \nwith a speed of {AppGlobals.score} km/s";
                     }
                     else if (character.transform.position.y > this.ClientSize.Height)
                     {
-                        gameOverForm.labelText = $"{AppGlobals.id} \ncrashed on floor \nwith a speed of {AppGlobals.score} km/s";
+                        gameOverForm.labelText = $"{AppGlobals.id} \ncrashed into floor \nwith a speed of {AppGlobals.score} km/s";
                     }
                     else
                     {
-                        gameOverForm.labelText = $"{AppGlobals.id} \ncrashed on a pillar \nwith a speed of {AppGlobals.score} km/s";
+                        gameOverForm.labelText = $"{AppGlobals.id} \ncrashed into a pillar \nwith a speed of {AppGlobals.score} km/s";
                     }
                     gameOverForm.Show();
                     this.Close();
